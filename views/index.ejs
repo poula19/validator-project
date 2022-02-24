@@ -1,0 +1,63 @@
+<%- include('header.ejs') %>
+    <div class="text-center container">
+        <h1 class="text-info my-4">express-validator is a set of express.js middlewares that wraps validator.js validator and sanitizer functions.</h1>
+
+    </div>
+    <div class="container mb-5">
+        <form action="/handleForm" method="POST">
+            <input value="<%=oldInputs.name%> " type="text" name="name" placeholder="Enter Your Name" class="form-control <%= error.find(data=> data.param == 'name')?'is-invalid':'is-valid' %> ">
+        <% if (error.find(data=> data.param == 'name')) { %>
+        <div class=" alert alert-danger text-center">
+            error name
+        </div>
+
+        <% } %>
+            <input value="<%= oldInputs.email %> " type="text" name="email" placeholder="Enter Your email" class="form-control my-4">
+            <% if (error.find(data=> data.param == 'email')) { %>
+                <div class=" alert alert-danger text-center">
+                    error email
+                </div>
+                <% } %>
+            <input value="<%= oldInputs.password %> " type="password" name="password" placeholder="Enter Your password" class="form-control">
+            <% if (error.find(data=> data.param == 'password')) { %>
+                <div class=" alert alert-danger text-center">
+                    error password
+                </div>
+                <% } %>
+            <button class="btn btn-outline-danger w-100 my-4">Add User</button>
+        </form>
+    </div>
+    <div class="container text-center">
+        <table class="table table-hover">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>DELETE</th>
+            </tr>
+
+            <% for( let index = 0; index < data.length; index++ ) { %>
+                <tr>
+                    <td>
+                        <%= index+1 %>
+                    </td>
+                    <td>
+                        <%= data[index].name %>
+                    </td>
+                    <td>
+                        <%= data[index].email %>
+                    </td>
+                    <td>
+                        <%= data[index].password %>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" href="/delete/<%= data[index]._id %> ">Delete</a>
+                    </td>
+                </tr>
+                <% } %>
+
+        </table>
+    </div>
+
+    <%- include('footer.ejs') %>
